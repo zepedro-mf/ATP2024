@@ -71,26 +71,32 @@ def listar_filmes(cinema):
     if len(cinema) == 0:
         print("\nAtualmente não há salas.")
     else:
-        for idx, sala in enumerate(cinema):
-            print(f"""\nSala {idx + 1}:
+        contador_sala = 1
+        for sala in cinema:
+            print(f"""\nSala {contador_sala}:
 - Filme: {sala[2]}""")
+            contador_sala += 1
 
 # Listar Disponibilidade
 def listar_disponibilidade(cinema):
     if len(cinema) == 0:
         print("\nAtualmente não há salas.")
     else:
-        for idx, sala in enumerate(cinema):
-            print(f"""\nSala {idx + 1}:
+        contador_sala = 1
+        for sala in cinema:
+            print(f"""\nSala {contador_sala}:
 - Filme: {sala[2]}
 - Lugares: {len(sala[0])}""")
-            for idx, lugar in enumerate(cinema[idx][0]): # Demonstrar a disposição da sala
-                print(lugar, end=' ') 
-                if (idx + 1) % 10 == 0:
-                    print()
+            contador_lugar = 0
+            for lugar in sala[0]: 
+                    print(lugar, end=' ') 
+                    contador_lugar += 1
+                    if contador_lugar % 10 == 0:
+                        print()
             print(f"""- Bilhetes vendidos: {sala[1]}
 - Lugares disponiveis: {len(sala[0]) - sala[1] - sala[3]}
 - Lugares interditos: {sala[3]}""")
+            contador_sala += 1
 
 # Editar Salas
 def editar_salas(cinema):
@@ -118,11 +124,18 @@ def editar_salas(cinema):
             sala_desejada = int(input(f"\nEscolha uma sala (1 a {len(cinema)}): ")) - 1
             if 0 <= sala_desejada < len(cinema):
                 lugar = int(input(("Que lugar deseja interditar? ")))
-                for idx, numero in enumerate(cinema[sala_desejada][0]):
-                    if numero == lugar:  
-                        cinema[sala_desejada][0][idx] = "(!)"
-                        print("Lugar interdito!")  
-                        cinema[sala_desejada][3] += 1
+                if lugar in cinema[sala_desejada][0]:
+                    contador_numero = 0
+                    for numero in cinema[sala_desejada][0]:
+                        if numero == lugar:  
+                            cinema[sala_desejada][0][contador_numero] = "(!)"
+                            cinema[sala_desejada][3] += 1
+                            v -= 1
+                            print("Lugar Interdito!")
+                        contador_numero += 1
+                else:
+                    print("O lugar não existe nesta sala.")
+                    
             else:
                 print("Sala Inválida")  
         elif modo == 0: 
@@ -142,21 +155,25 @@ def vender_bilhetes(cinema):
                 sala[1] += v      
             else:
                 print("Número da sala inválido.")
-        for idx, lugar in enumerate(cinema[sala_desejada][0]): 
+        contador_lugar = 0
+        for lugar in cinema[sala_desejada][0]: 
                     print(lugar, end=' ') 
-                    if (idx + 1) % 10 == 0:
+                    contador_lugar += 1
+                    if contador_lugar % 10 == 0:
                         print()
         while v > 0:
             lugar = int(input(("Que lugar deseja? ")))
             if lugar in cinema[sala_desejada][0]:
-                for idx, numero in enumerate(cinema[sala_desejada][0]):
+                contador_numero = 0
+                for numero in cinema[sala_desejada][0]:
                     if numero == lugar:  
-                        cinema[sala_desejada][0][idx] = "(-)"
+                        cinema[sala_desejada][0][contador_numero] = "(-)"
                         v -= 1
+                    contador_numero += 1
             else:
                 print("Esse lugar já está ocupado.")
         cinema[sala_desejada][1] += v
     else:
         print("Sala sem filme!")
 
-menu()
+menu() 
