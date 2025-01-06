@@ -137,7 +137,7 @@ while running:
                             ]), sg.Push(),
                             sg.Column([
                                 [sg.Text("Authors:", font=("Helvetica", 14), size=(15, 1)), sg.Button("Add", key="-ADD_AUTHORS-"), sg.Button("Remove", key="-REMOVE_AUTHORS-"), sg.Button("Edit", key="-EDIT_AUTHORS-")],
-                                [sg.Listbox(values=[f"Name: {author['name']}; Affiliation: {author['affiliation']}" for author in publicacao_encontrada.get("authors", [])], key="-AUTHORS-", size=(60, 5))]
+                                [sg.Listbox(values=[f"Name: {author['name']} || Affiliation: {author['affiliation']}" for author in publicacao_encontrada.get("authors", [])], key="-AUTHORS-", size=(60, 5))]
                             ])
                         ],
                         [sg.Text("DOI:", font=("Helvetica", 14), size=(15, 1)), sg.Input(default_text=publicacao_encontrada.get("doi", ""), key="-EDIT_DOI-", size=(100, 1))],

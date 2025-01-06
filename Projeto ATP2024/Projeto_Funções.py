@@ -349,7 +349,7 @@ def editar_autores(window_editar, values, autores):
         return autores
         
     for author_entry in selected_authors:
-        name, affiliation = author_entry.split("; ")
+        name, affiliation = author_entry.split("|| ")
         name = name.split(": ")[1]
         affiliation = affiliation.split(": ")[1]
         autor = next((a for a in autores if a["name"] == name), None)
